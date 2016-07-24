@@ -1,24 +1,24 @@
 
 {% set compute = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['neutron-plugin-openvswitch-agent', 'openvswitch-switch', 'openvswitch-datapath-dkms'],
+        'pkgs': ['neutron-plugin-openvswitch-agent', 'openvswitch-switch', 'openvswitch-datapath-dkms', 'python-memcache', 'python-openstackclient'],
         'services': ['openvswitch-switch', 'neutron-plugin-openvswitch-agent']
     },
     'RedHat': {
-        'pkgs': ['openstack-neutron-openvswitch', 'openvswitch', 'fuel-utils'],
+        'pkgs': ['openstack-neutron-openvswitch', 'openvswitch', 'fuel-utils', 'python-memcached', 'python-openstackclient'],
         'services': ['openvswitch', 'neutron-openvswitch-agent']
     },
 }, merge=salt['pillar.get']('neutron:compute')) %}
 
 {% set bridge = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['neutron-dhcp-agent', 'neutron-plugin-openvswitch-agent', 'neutron-l3-agent', 'openvswitch-common'],
+        'pkgs': ['neutron-dhcp-agent', 'neutron-plugin-openvswitch-agent', 'neutron-l3-agent', 'openvswitch-common', 'python-memcache', 'python-openstackclient'],
         'precise_pkgs': ['openvswitch-datapath-lts-saucy-dkms'],
         'migration': False,
         'services': ['neutron-plugin-openvswitch-agent', 'neutron-metadata-agent', 'neutron-l3-agent', 'neutron-dhcp-agent']
     },
     'RedHat': {
-        'pkgs': ['openstack-neutron-openvswitch'],
+        'pkgs': ['openstack-neutron-openvswitch', 'python-memcached', 'python-openstackclient'],
         'migration': False,
         'migration_pkgs': ['fuel-utils',],
         'services': ['neutron-openvswitch-agent', 'neutron-metadata-agent', 'neutron-l3-agent', 'neutron-dhcp-agent']
@@ -27,13 +27,13 @@
 
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['neutron-server','neutron-lbaas-agent', 'gettext-base'],
+        'pkgs': ['neutron-server','neutron-lbaas-agent', 'gettext-base', 'python-memcache', 'python-openstackclient'],
         'pkgs_ml2': ['neutron-plugin-ml2'],
         'services': ['neutron-server'],
         'notification': False
     },
     'RedHat': {
-        'pkgs_ml2': ['openstack-neutron-ml2'],
+        'pkgs_ml2': ['openstack-neutron-ml2', 'python-memcached', 'python-openstackclient'],
         'pkgs': ['openstack-neutron'],
         'services': ['neutron-server'],
         'notification': False
